@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#16a34a" />
     <title>Потрать деньги Илона Маска</title>
-    <link rel="stylesheet" href="styles.css?v=9" />
+    <link rel="stylesheet" href="styles.css?v=10" />
   </head>
   <body>
     <div class="ambient ambient-one"></div>
@@ -14,6 +14,11 @@
     <header class="hero">
       <nav class="top-nav" aria-label="Основная навигация">
         <a class="brand" href="#">MUSK<span>SPEND</span></a>
+        <div class="profile-nav" aria-label="Выбор героя">
+          <button class="profile-tab active" data-profile="elon" type="button">Илон Маск</button>
+          <button class="profile-tab" data-profile="paradeev1ch" type="button">paradeev1ch</button>
+          <button class="profile-tab" data-profile="kyertov" type="button">Kyertov</button>
+        </div>
         <div class="nav-actions">
           <button class="icon-button" id="theme-toggle" type="button" aria-label="Переключить тему">☾</button>
           <button class="secondary-button" id="reset-button" type="button">Сбросить</button>
@@ -21,17 +26,18 @@
       </nav>
 
       <div class="hero-content">
-        <div class="portrait" aria-label="Портрет Илона Маска">
+        <div class="portrait" id="profile-portrait" aria-label="Портрет Илона Маска">
           <div class="portrait-orbit"></div>
           <div class="portrait-glow"></div>
           <img class="portrait-photo" src="assets/avatar/elon-cutout.png" alt="Илон Маск" />
+          <strong class="portrait-initials hidden" id="portrait-initials">P1</strong>
           <span class="portrait-x">X</span>
           <span class="portrait-star">✦</span>
         </div>
         <div class="hero-copy">
-          <p class="eyebrow">Интерактивный финансовый эксперимент</p>
-          <h1>Потрать деньги<br /><span>Илона Маска</span></h1>
-          <p class="hero-description">
+          <p class="eyebrow" id="hero-eyebrow">Интерактивный финансовый эксперимент</p>
+          <h1>Потрать деньги<br /><span id="profile-name">Илона Маска</span></h1>
+          <p class="hero-description" id="hero-description">
             У тебя есть состояние технологического миллиардера. Покупай кофе, компании,
             ракеты и совершенно необязательные порталы на Марс.
           </p>
@@ -66,7 +72,7 @@
           <article class="stat-card">
             <span>Всего потрачено</span>
             <strong id="spent-stat">0 ₽</strong>
-            <small>из состояния Илона Маска</small>
+            <small id="spent-caption">из состояния Илона Маска</small>
           </article>
           <article class="stat-card">
             <span>Покупок сделано</span>
@@ -119,7 +125,7 @@
       <section class="finale hidden" id="finale">
         <div class="finale-orb">✦</div>
         <p class="eyebrow">Финансовая миссия почти выполнена</p>
-        <h2>Ты почти потратил состояние Илона Маска!</h2>
+        <h2 id="finale-title">Ты почти потратил состояние Илона Маска!</h2>
         <p>Это было сложно, абсурдно и впечатляюще. Осталось совсем немного.</p>
         <button class="primary-button" id="final-reset-button" type="button">Начать заново</button>
       </section>
@@ -134,7 +140,7 @@
     <div class="toast-region" id="toast-region" aria-live="polite"></div>
     <div class="confetti-layer" id="confetti-layer" aria-hidden="true"></div>
 
-    <script src="products.js?v=9"></script>
-    <script src="app.js?v=9"></script>
+    <script src="products.js?v=10"></script>
+    <script src="app.js?v=10"></script>
   </body>
 </html>

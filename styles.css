@@ -111,6 +111,33 @@ button:disabled {
   gap: 10px;
 }
 
+.profile-nav {
+  display: flex;
+  gap: 5px;
+  padding: 4px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--surface-soft);
+}
+
+.profile-tab {
+  padding: 8px 12px;
+  color: var(--muted);
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  font-size: 12px;
+  font-weight: 800;
+  transition: color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+
+.profile-tab:hover,
+.profile-tab.active {
+  color: white;
+  background: var(--green);
+  transform: translateY(-1px);
+}
+
 .icon-button,
 .secondary-button,
 .text-button {
@@ -190,6 +217,27 @@ button:disabled {
   object-position: center bottom;
   filter: drop-shadow(0 16px 18px rgba(0, 0, 0, 0.22));
   transform: translateX(-50%);
+}
+
+.portrait-initials {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  display: grid;
+  color: white;
+  place-items: center;
+  font-size: 82px;
+  font-weight: 950;
+  letter-spacing: -7px;
+  text-shadow: 0 14px 35px rgba(0, 0, 0, 0.22);
+}
+
+.portrait.paradeev1ch {
+  background: radial-gradient(circle at 50% 35%, #a855f7, #34145b 70%);
+}
+
+.portrait.kyertov {
+  background: radial-gradient(circle at 50% 35%, #38bdf8, #12334a 70%);
 }
 
 .portrait-x {
@@ -930,6 +978,17 @@ footer p {
 }
 
 @media (max-width: 950px) {
+  .top-nav {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .profile-nav {
+    order: 3;
+    width: 100%;
+    overflow-x: auto;
+  }
+
   .hero-content {
     grid-template-columns: 220px 1fr;
     gap: 38px;
@@ -966,6 +1025,11 @@ footer p {
   .secondary-button {
     padding: 0 12px;
     font-size: 12px;
+  }
+
+  .profile-tab {
+    flex: 1 0 auto;
+    padding: 8px 10px;
   }
 
   .hero-content {

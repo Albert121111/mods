@@ -1,9 +1,43 @@
-const INITIAL_BUDGET = 62_448_565_000_000;
-const STORAGE_KEY = "musk-spend-game-rub-v1";
 const THEME_KEY = "musk-spend-theme";
 
+const PROFILES = {
+  elon: {
+    budget: 62_448_565_000_000,
+    name: "Илона Маска",
+    shortName: "Илон Маск",
+    initials: "EM",
+    eyebrow: "Интерактивный финансовый эксперимент",
+    description: "У тебя есть состояние технологического миллиардера. Покупай кофе, компании, ракеты и совершенно необязательные порталы на Марс.",
+    caption: "из состояния Илона Маска"
+  },
+  paradeev1ch: {
+    budget: 250_000_000,
+    name: "paradeev1ch",
+    shortName: "paradeev1ch",
+    initials: "P1",
+    eyebrow: "Условный бюджет стримера",
+    description: "Потрать игровой бюджет стримера на технику, транспорт, недвижимость и покупки для самого громкого эфира.",
+    caption: "из условного бюджета paradeev1ch"
+  },
+  kyertov: {
+    budget: 10_000_000_000,
+    name: "Влада Куертова",
+    shortName: "Kyertov",
+    initials: "VK",
+    eyebrow: "Условный бюджет бизнесмена",
+    description: "Распредели игровой капитал Kyertov между технологиями, бизнесом, недвижимостью и по-настоящему смелыми идеями.",
+    caption: "из условного бюджета Kyertov"
+  }
+};
+
+function getProfileId() {
+  const id = location.hash.slice(1).toLowerCase();
+  return PROFILES[id] ? id : "elon";
+}
+
 const state = {
-  balance: INITIAL_BUDGET,
+  profileId: getProfileId(),
+  balance: 0,
   quantities: {},
   category: "Все",
   sort: "cheap",
@@ -34,8 +68,24 @@ const els = {
   finale: document.querySelector("#finale"),
   emptyState: document.querySelector("#empty-state"),
   toastRegion: document.querySelector("#toast-region"),
-  confettiLayer: document.querySelector("#confetti-layer")
+  confettiLayer: document.querySelector("#confetti-layer"),
+  profilePortrait: document.querySelector("#profile-portrait"),
+  portraitPhoto: document.querySelector(".portrait-photo"),
+  portraitInitials: document.querySelector("#portrait-initials"),
+  profileName: document.querySelector("#profile-name"),
+  heroEyebrow: document.querySelector("#hero-eyebrow"),
+  heroDescription: document.querySelector("#hero-description"),
+  spentCaption: document.querySelector("#spent-caption"),
+  finaleTitle: document.querySelector("#finale-title")
 };
+
+function currentProfile() {
+  return PROFILES[state.profileId];
+}
+
+function storageKey() {
+  return `spend-game-rub-v2-${state.profileId}`;
+}
 
 function formatNumber(value) {
   return Math.round(value).toLocaleString("ru-RU");
@@ -50,7 +100,10 @@ function productPhoto(product) {
 }
 
 function loadGame() {
-  const saved = localStorage.getItem(STORAGE_KEY);
+  state.balance = currentProfile().budget;
+  state.quantities = {};
+  state.milestones = new Set();
+  const saved = localStorage.getItem(storageKey());
   if (!saved) return;
   try {
     const parsed = JSON.parse(saved);
@@ -60,26 +113,26 @@ function loadGame() {
       state.quantities[product.id] = quantity;
       return sum + product.price * quantity;
     }, 0);
-    state.balance = Math.max(0, INITIAL_BUDGET - Math.min(INITIAL_BUDGET, spent));
+    state.balance = Math.max(0, currentProfile().budget - Math.min(currentProfile().budget, spent));
     state.milestones = new Set(Array.isArray(parsed.milestones) ? parsed.milestones : []);
   } catch {
-    localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(storageKey());
   }
 }
 
 function saveGame() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify({
+  localStorage.setItem(storageKey(), JSON.stringify({
     quantities: state.quantities,
     milestones: [...state.milestones]
   }));
 }
 
 function getStats() {
-  const spent = INITIAL_BUDGET - state.balance;
+  const spent = currentProfile().budget - state.balance;
   const totalItems = Object.values(state.quantities).reduce((sum, quantity) => sum + quantity, 0);
   const purchased = PRODUCTS.filter((product) => (state.quantities[product.id] || 0) > 0);
   const mostExpensive = purchased.sort((a, b) => b.price - a.price)[0] || null;
-  const percent = (spent / INITIAL_BUDGET) * 100;
+  const percent = (spent / currentProfile().budget) * 100;
   return { spent, totalItems, mostExpensive, percent };
 }
 
@@ -89,6 +142,25 @@ function renderCategories() {
       ${category}
     </button>
   `).join("");
+}
+
+function renderProfile() {
+  const profile = currentProfile();
+  document.title = `Потрать деньги ${profile.name}`;
+  els.profileName.textContent = profile.name;
+  els.heroEyebrow.textContent = profile.eyebrow;
+  els.heroDescription.textContent = profile.description;
+  els.spentCaption.textContent = profile.caption;
+  els.finaleTitle.textContent = `Ты почти потратил бюджет ${profile.name}!`;
+  els.profilePortrait.classList.toggle("paradeev1ch", state.profileId === "paradeev1ch");
+  els.profilePortrait.classList.toggle("kyertov", state.profileId === "kyertov");
+  els.profilePortrait.setAttribute("aria-label", `Аватар ${profile.shortName}`);
+  els.portraitPhoto.classList.toggle("hidden", state.profileId !== "elon");
+  els.portraitInitials.classList.toggle("hidden", state.profileId === "elon");
+  els.portraitInitials.textContent = profile.initials;
+  document.querySelectorAll(".profile-tab").forEach((button) => {
+    button.classList.toggle("active", button.dataset.profile === state.profileId);
+  });
 }
 
 function getVisibleProducts() {
@@ -162,7 +234,7 @@ function renderStats() {
   if (percent >= 99) els.remainingNote.textContent = "Финиш уже рядом";
   else if (percent >= 90) els.remainingNote.textContent = "Осталось совсем немного";
   else if (percent >= 50) els.remainingNote.textContent = "Половина состояния позади";
-  else if (percent > 0) els.remainingNote.textContent = "Илон начинает волноваться";
+  else if (percent > 0) els.remainingNote.textContent = `${currentProfile().shortName} начинает волноваться`;
   else els.remainingNote.textContent = "Приключение начинается";
 
   if (mostExpensive) {
@@ -175,6 +247,7 @@ function renderStats() {
 }
 
 function render() {
+  renderProfile();
   renderCategories();
   renderProducts();
   renderStats();
@@ -287,13 +360,22 @@ function launchConfetti(count) {
 }
 
 function resetGame(clearSave = false) {
-  state.balance = INITIAL_BUDGET;
+  state.balance = currentProfile().budget;
   state.quantities = {};
   state.milestones = new Set();
-  if (clearSave) localStorage.removeItem(STORAGE_KEY);
+  if (clearSave) localStorage.removeItem(storageKey());
   else saveGame();
   render();
   showToast(clearSave ? "Сохранение очищено" : "Игра сброшена", "sell");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function switchProfile(profileId) {
+  if (!PROFILES[profileId] || profileId === state.profileId) return;
+  state.profileId = profileId;
+  history.replaceState(null, "", `#${profileId}`);
+  loadGame();
+  render();
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
@@ -322,6 +404,16 @@ els.productsGrid.addEventListener("click", (event) => {
 els.productsGrid.addEventListener("input", (event) => {
   if (!event.target.matches(".buy-amount")) return;
   updateProductCard(event.target.closest("[data-id]"));
+});
+
+document.querySelector(".profile-nav").addEventListener("click", (event) => {
+  const button = event.target.closest("[data-profile]");
+  if (button) switchProfile(button.dataset.profile);
+});
+
+window.addEventListener("hashchange", () => {
+  const profileId = getProfileId();
+  if (profileId !== state.profileId) switchProfile(profileId);
 });
 
 els.categoryChips.addEventListener("click", (event) => {
