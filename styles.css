@@ -154,53 +154,47 @@ button:disabled {
   height: 285px;
   border: 1px solid var(--line);
   border-radius: 50%;
-  background: linear-gradient(145deg, var(--surface-soft), var(--surface));
+  background:
+    radial-gradient(circle at 50% 36%, rgba(74, 222, 128, 0.23), transparent 36%),
+    linear-gradient(145deg, var(--surface-soft), var(--surface));
   box-shadow: var(--shadow);
   overflow: hidden;
 }
 
 .portrait-orbit {
   position: absolute;
+  z-index: 3;
   inset: 18px;
   border: 1px dashed rgba(34, 197, 94, 0.4);
   border-radius: 50%;
   animation: rotate 18s linear infinite;
 }
 
-.portrait-head {
+.portrait-glow {
   position: absolute;
-  top: 66px;
-  left: 105px;
-  width: 76px;
-  height: 94px;
-  border-radius: 45% 45% 48% 48%;
-  background: linear-gradient(145deg, #313b34, #151a17);
+  z-index: 0;
+  inset: 48px;
+  border-radius: 50%;
+  background: rgba(34, 197, 94, 0.25);
+  filter: blur(28px);
 }
 
-.portrait-head::before {
-  content: "";
+.portrait-photo {
   position: absolute;
-  top: -9px;
-  left: 5px;
-  width: 68px;
-  height: 30px;
-  border-radius: 80% 40% 30% 20%;
-  background: #0b0e0c;
-  transform: rotate(-4deg);
-}
-
-.portrait-body {
-  position: absolute;
-  left: 67px;
-  bottom: -48px;
-  width: 155px;
-  height: 158px;
-  border-radius: 60px 60px 20px 20px;
-  background: linear-gradient(145deg, #263128, #0f1511);
+  z-index: 2;
+  left: 50%;
+  bottom: -5px;
+  width: 285px;
+  height: 333px;
+  object-fit: contain;
+  object-position: center bottom;
+  filter: drop-shadow(0 16px 18px rgba(0, 0, 0, 0.22));
+  transform: translateX(-50%);
 }
 
 .portrait-x {
   position: absolute;
+  z-index: 4;
   right: 38px;
   bottom: 50px;
   color: var(--green-bright);
@@ -211,6 +205,7 @@ button:disabled {
 
 .portrait-star {
   position: absolute;
+  z-index: 4;
   top: 42px;
   left: 45px;
   color: var(--green);
@@ -898,16 +893,9 @@ footer p {
     height: 220px;
   }
 
-  .portrait-head {
-    top: 50px;
-    left: 80px;
-    transform: scale(0.78);
-  }
-
-  .portrait-body {
-    left: 42px;
-    bottom: -57px;
-    transform: scale(0.82);
+  .portrait-photo {
+    width: 220px;
+    height: 257px;
   }
 
   .products-grid {
@@ -946,14 +934,9 @@ footer p {
     height: 180px;
   }
 
-  .portrait-head {
-    top: 31px;
-    left: 52px;
-  }
-
-  .portrait-body {
-    left: 12px;
-    bottom: -68px;
+  .portrait-photo {
+    width: 180px;
+    height: 210px;
   }
 
   .portrait-x {
