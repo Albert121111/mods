@@ -11,7 +11,7 @@ const PROFILES = {
     caption: "из состояния Илона Маска"
   },
   paradeev1ch: {
-    budget: 250_000_000,
+    budget: 30_000_000,
     name: "paradeev1ch",
     shortName: "paradeev1ch",
     initials: "P1",
@@ -20,7 +20,7 @@ const PROFILES = {
     caption: "из условного бюджета paradeev1ch"
   },
   kyertov: {
-    budget: 10_000_000_000,
+    budget: 158_000_000,
     name: "Влада Куертова",
     shortName: "Kyertov",
     initials: "VK",
