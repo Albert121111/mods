@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#16a34a" />
+    <title>Потрать деньги Илона Маска</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+
+    <header class="hero">
+      <nav class="top-nav" aria-label="Основная навигация">
+        <a class="brand" href="#">MUSK<span>SPEND</span></a>
+        <div class="nav-actions">
+          <button class="icon-button" id="theme-toggle" type="button" aria-label="Переключить тему">☾</button>
+          <button class="secondary-button" id="reset-button" type="button">Сбросить</button>
+        </div>
+      </nav>
+
+      <div class="hero-content">
+        <div class="portrait" aria-label="Стилизованный силуэт Илона Маска">
+          <div class="portrait-orbit"></div>
+          <div class="portrait-head"></div>
+          <div class="portrait-body"></div>
+          <span class="portrait-x">X</span>
+          <span class="portrait-star">✦</span>
+        </div>
+        <div class="hero-copy">
+          <p class="eyebrow">Интерактивный финансовый эксперимент</p>
+          <h1>Потрать деньги<br /><span>Илона Маска</span></h1>
+          <p class="hero-description">
+            У тебя есть состояние технологического миллиардера. Покупай кофе, компании,
+            ракеты и совершенно необязательные порталы на Марс.
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="balance-sticky" id="balance-panel">
+        <div class="balance-inner">
+          <div>
+            <span class="balance-label">Осталось потратить</span>
+            <strong class="balance-value" id="balance">$850,000,000,000</strong>
+          </div>
+          <div class="progress-copy">
+            <span id="progress-text">Потрачено 0%</span>
+            <span id="remaining-note">Приключение начинается</span>
+          </div>
+        </div>
+        <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+      </section>
+
+      <section class="dashboard page-shell">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Твоя финансовая телеметрия</p>
+            <h2>Панель управления</h2>
+          </div>
+          <button class="text-button" id="clear-save-button" type="button">Очистить сохранение</button>
+        </div>
+        <div class="stats-grid">
+          <article class="stat-card">
+            <span>Всего потрачено</span>
+            <strong id="spent-stat">$0</strong>
+            <small>из состояния Илона Маска</small>
+          </article>
+          <article class="stat-card">
+            <span>Покупок сделано</span>
+            <strong id="items-stat">0</strong>
+            <small>вещей, активов и идей</small>
+          </article>
+          <article class="stat-card">
+            <span>Самая дорогая покупка</span>
+            <strong class="stat-name" id="expensive-stat">Пока ничего</strong>
+            <small id="expensive-price">Начни с чего-нибудь</small>
+          </article>
+          <article class="stat-card accent-stat">
+            <span>Потрачено состояния</span>
+            <strong id="percent-stat">0%</strong>
+            <small>главное не останавливаться</small>
+          </article>
+        </div>
+      </section>
+
+      <section class="shop page-shell">
+        <div class="section-heading shop-heading">
+          <div>
+            <p class="eyebrow">Каталог возможностей</p>
+            <h2>Что покупаем?</h2>
+          </div>
+          <div class="catalog-count"><strong id="visible-count">0</strong><span>товаров</span></div>
+        </div>
+
+        <div class="filters">
+          <div class="search-wrap">
+            <span>⌕</span>
+            <input id="search-input" type="search" placeholder="Найти ракету, бургер или страну..." />
+          </div>
+          <select id="sort-select" aria-label="Сортировка товаров">
+            <option value="cheap">Сначала дешевые</option>
+            <option value="expensive">Сначала дорогие</option>
+            <option value="popular">Популярные</option>
+            <option value="crazy">Самые безумные</option>
+          </select>
+        </div>
+        <div class="category-chips" id="category-chips"></div>
+        <div class="products-grid" id="products-grid"></div>
+        <div class="empty-state hidden" id="empty-state">
+          <span>⌕</span>
+          <h3>Такой покупки пока нет</h3>
+          <p>Попробуй другой запрос или категорию.</p>
+        </div>
+      </section>
+
+      <section class="finale hidden" id="finale">
+        <div class="finale-orb">✦</div>
+        <p class="eyebrow">Финансовая миссия почти выполнена</p>
+        <h2>Ты почти потратил состояние Илона Маска!</h2>
+        <p>Это было сложно, абсурдно и впечатляюще. Осталось совсем немного.</p>
+        <button class="primary-button" id="final-reset-button" type="button">Начать заново</button>
+      </section>
+    </main>
+
+    <footer>
+      <strong>MUSKSPEND</strong>
+      <p>Фанатская браузерная игра. Все цены условные.</p>
+      <span>Сделано для веселых и совершенно ненаучных расчетов.</span>
+    </footer>
+
+    <div class="toast-region" id="toast-region" aria-live="polite"></div>
+    <div class="confetti-layer" id="confetti-layer" aria-hidden="true"></div>
+
+    <script src="products.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
