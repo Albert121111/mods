@@ -58,79 +58,9 @@ function formatMoney(value) {
   return `${formatCompactNumber(value)} ₽`;
 }
 
-const categoryArtwork = {
-  "Еда и мелочи": `
-    <path d="M52 84h96c0 27-18 44-48 44S52 111 52 84Z" fill="none" stroke="currentColor" stroke-width="8"/>
-    <path d="M62 72c10-21 66-21 76 0H62Z" fill="currentColor" opacity=".9"/>
-    <path d="M73 58c9-10 45-10 54 0" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round"/>
-    <path d="M67 98h66" stroke="currentColor" stroke-width="7" stroke-linecap="round"/>`,
-  "Техника": `
-    <rect x="48" y="43" width="104" height="73" rx="10" fill="none" stroke="currentColor" stroke-width="8"/>
-    <path d="M36 132h128l-13 14H49l-13-14Z" fill="currentColor" opacity=".9"/>
-    <circle cx="100" cy="80" r="17" fill="none" stroke="currentColor" stroke-width="7"/>
-    <path d="M100 57v-9m0 64v-9m23-23h9m-64 0h9m39-16 7-7m-46 46 7-7m32 0 7 7M77 57l7 7" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>`,
-  "Транспорт": `
-    <path d="M43 112h114l-9-31-24-18H75L55 81l-12 31Z" fill="none" stroke="currentColor" stroke-width="8" stroke-linejoin="round"/>
-    <path d="M70 82h61M40 112h120" stroke="currentColor" stroke-width="7" stroke-linecap="round"/>
-    <circle cx="67" cy="119" r="13" fill="currentColor"/>
-    <circle cx="135" cy="119" r="13" fill="currentColor"/>`,
-  "Недвижимость": `
-    <path d="M46 143V68l54-35 54 35v75H46Z" fill="none" stroke="currentColor" stroke-width="8" stroke-linejoin="round"/>
-    <path d="M80 143v-38h40v38M72 77h18v18H72zm38 0h18v18h-18z" fill="currentColor"/>
-    <path d="M36 143h128" stroke="currentColor" stroke-width="8" stroke-linecap="round"/>`,
-  "Бизнес": `
-    <rect x="43" y="54" width="114" height="88" rx="12" fill="none" stroke="currentColor" stroke-width="8"/>
-    <path d="M75 54V41h50v13M43 83h114M86 78v11h28V78" fill="none" stroke="currentColor" stroke-width="7" stroke-linejoin="round"/>
-    <path d="M70 116h19m22 0h19" stroke="currentColor" stroke-width="7" stroke-linecap="round"/>`,
-  "Космос": `
-    <path d="M100 31c25 19 32 53 18 84l-18 22-18-22c-14-31-7-65 18-84Z" fill="none" stroke="currentColor" stroke-width="8" stroke-linejoin="round"/>
-    <circle cx="100" cy="76" r="14" fill="currentColor"/>
-    <path d="m82 107-24 25 26 2m34-27 24 25-26 2M100 139v18m-13-13-7 14m33-14 7 14" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>`,
-  "Безумные покупки": `
-    <path d="m100 29 13 38 40-7-30 27 27 31-40-9-10 40-10-40-40 9 27-31-30-27 40 7 13-38Z" fill="none" stroke="currentColor" stroke-width="8" stroke-linejoin="round"/>
-    <circle cx="100" cy="88" r="18" fill="currentColor"/>
-    <path d="M42 35l10 10m96-10-10 10M43 145l12-12m90 12-12-12" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>`
-};
-
-const categoryColors = {
-  "Еда и мелочи": ["#f59e0b", "#f97316"],
-  "Техника": ["#0ea5e9", "#6366f1"],
-  "Транспорт": ["#ef4444", "#f97316"],
-  "Недвижимость": ["#14b8a6", "#22c55e"],
-  "Бизнес": ["#8b5cf6", "#d946ef"],
-  "Космос": ["#2563eb", "#7c3aed"],
-  "Безумные покупки": ["#ec4899", "#f59e0b"]
-};
-
-function escapeSvgText(text) {
-  return text.replace(/[&<>"']/g, (char) => ({
-    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&apos;"
-  })[char]);
-}
-
-function productArtwork(product) {
-  const [start, end] = categoryColors[product.category];
-  const title = escapeSvgText(product.name.length > 24 ? `${product.name.slice(0, 22)}...` : product.name);
-  const shape = categoryArtwork[product.category];
-  const seed = product.id * 37;
-  const svg = `
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 260" role="img" aria-label="${title}">
-      <defs>
-        <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-          <stop stop-color="${start}"/><stop offset="1" stop-color="${end}"/>
-        </linearGradient>
-        <filter id="s"><feDropShadow dx="0" dy="12" stdDeviation="12" flood-opacity=".22"/></filter>
-      </defs>
-      <rect width="420" height="260" rx="30" fill="url(#g)"/>
-      <circle cx="${335 + seed % 55}" cy="${24 + seed % 38}" r="${72 + seed % 34}" fill="#fff" opacity=".10"/>
-      <circle cx="${30 + seed % 48}" cy="${198 + seed % 35}" r="${45 + seed % 25}" fill="#fff" opacity=".09"/>
-      <path d="M0 210C90 160 145 247 235 195s130-30 185-66v131H0Z" fill="#07130b" opacity=".12"/>
-      <g transform="translate(205 14) scale(.72)" color="#fff" opacity=".96" filter="url(#s)">${shape}</g>
-      <rect x="22" y="183" width="376" height="55" rx="16" fill="#07130b" opacity=".22"/>
-      <text x="40" y="216" fill="#fff" font-size="22" font-family="Arial, sans-serif" font-weight="700">${title}</text>
-      <text x="40" y="47" fill="#fff" opacity=".74" font-size="11" font-family="Arial, sans-serif" font-weight="700" letter-spacing="1.6">${escapeSvgText(product.category.toUpperCase())}</text>
-    </svg>`;
-  return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+function productPhoto(product) {
+  const keywords = encodeURIComponent(product.photo || "technology");
+  return `https://loremflickr.com/640/400/${keywords}/all?lock=${product.id}`;
 }
 
 function loadGame() {
@@ -205,7 +135,8 @@ function renderProducts() {
           <span class="crazy-level" title="Уровень безумия">✦ ${product.crazy}/10</span>
         </div>
         <div class="product-visual">
-          <img src="${productArtwork(product)}" alt="${product.name}" loading="lazy" />
+          <img src="${productPhoto(product)}" alt="${product.name}" loading="lazy" referrerpolicy="no-referrer" />
+          <span class="photo-source">Фото: Flickr CC</span>
         </div>
         <div class="product-info">
           <h3>${product.name}</h3>

@@ -109,3 +109,32 @@ const PRODUCTS = [
 ];
 
 const CATEGORIES = ["Все", "Еда и мелочи", "Техника", "Транспорт", "Недвижимость", "Бизнес", "Космос", "Безумные покупки"];
+
+const PRODUCT_PHOTOS = [
+  "burger,food", "pizza,food", "coffee,cup", "shawarma,kebab", "music,headphones",
+  "streaming,television", "videogame,character", "sneakers,fashion", "jacket,fashion", "gold,burger",
+  "gaming,mouse", "mechanical,keyboard", "headphones,audio", "smartphone,iphone", "playstation,console",
+  "xbox,console", "gaming,computer", "laptop,macbook", "television,8k", "home,cinema",
+  "computer,workstation", "virtual,reality", "drone,flying", "professional,camera", "3d,printer",
+  "robot,home", "robot,dog", "server,rack", "supercomputer,technology", "data,center",
+  "semiconductor,factory", "artificial,intelligence,lab", "electric,scooter", "bicycle,city", "motorcycle,road",
+  "tesla,model3", "tesla,car", "cybertruck,tesla", "lamborghini,car", "ferrari,car",
+  "rollsroyce,car", "bugatti,car", "bus,city", "helicopter,flying", "private,jet",
+  "yacht,sea", "superyacht,luxury", "submarine,ocean", "train,railway", "formula1,racing",
+  "airplane,airline", "apartment,interior", "house,modern", "mansion,luxury", "penthouse,interior",
+  "castle,architecture", "hotel,luxury", "shopping,mall", "stadium,sports", "skyscraper,city",
+  "ski,resort", "private,island", "city,block", "smart,city", "space,hotel",
+  "cafe,coffee", "restaurant,interior", "restaurant,chain", "esports,gaming", "football,club",
+  "game,studio", "film,studio", "music,studio", "delivery,package", "startup,office",
+  "robotics,factory", "electric,car,factory", "news,media", "bank,building", "online,shopping",
+  "social,media", "astronaut,spacesuit", "satellite,space", "rocket,launch", "moon,rover",
+  "mars,rover", "moon,space", "space,station", "moon,base", "rocket,fleet",
+  "mars,colony", "space,elevator", "mars,planet", "gold,toilet", "robot,waiter",
+  "giant,statue", "formula1,track", "fireworks,night", "volcano,lava", "remote,control",
+  "internet,meme", "artificial,island", "country,flag", "future,city", "time,machine",
+  "mars,portal", "planet,space"
+];
+
+PRODUCTS.forEach((product, index) => {
+  product.photo = PRODUCT_PHOTOS[index];
+});
