@@ -669,6 +669,53 @@ h2 {
   text-overflow: ellipsis;
 }
 
+.custom-buy-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 1.45fr;
+  gap: 7px;
+  margin-top: 7px;
+}
+
+.buy-amount {
+  min-width: 0;
+  height: 42px;
+  padding: 0 10px;
+  color: var(--text);
+  border: 1px solid var(--line);
+  outline: 0;
+  border-radius: 11px;
+  background: var(--surface-soft);
+  font-weight: 800;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.buy-amount:focus {
+  border-color: var(--green);
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.12);
+}
+
+.custom-buy-button {
+  min-width: 0;
+  color: white;
+  border: 0;
+  border-radius: 11px;
+  background: var(--green-dark);
+  font-size: 11px;
+  font-weight: 850;
+  transition: transform 0.18s ease, filter 0.18s ease, opacity 0.18s ease;
+}
+
+.custom-buy-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  filter: brightness(1.08);
+}
+
+.custom-buy-button:disabled {
+  color: var(--muted);
+  background: var(--surface-soft);
+  opacity: 0.65;
+}
+
 .max-button {
   display: flex;
   align-items: center;

@@ -134,6 +134,10 @@ function renderProducts() {
           <div class="quantity"><span>Куплено</span><strong>${formatNumber(quantity)}</strong></div>
           <button class="action-button buy" data-action="buy" ${!canBuy ? "disabled" : ""} type="button">Купить</button>
         </div>
+        <div class="custom-buy-row">
+          <input class="buy-amount" type="text" value="1" inputmode="numeric" pattern="[0-9 ]*" autocomplete="off" aria-label="Количество товара ${product.name}" />
+          <button class="custom-buy-button" data-action="custom-buy" ${!canBuy ? "disabled" : ""} type="button">Купить указанное</button>
+        </div>
         <button class="max-button" data-action="max" ${!canBuy ? "disabled" : ""} type="button">
           Купить максимум <span>${canBuy ? `×${formatNumber(Math.floor(state.balance / product.price))}` : "Недоступно"}</span>
         </button>
@@ -176,6 +180,36 @@ function render() {
   renderStats();
 }
 
+function getRequestedAmount(card) {
+  const input = card?.querySelector(".buy-amount");
+  const value = Math.floor(Number(input?.value.replace(/\s/g, "")));
+  return Number.isFinite(value) && value > 0 ? value : 0;
+}
+
+function updateProductCard(card) {
+  const product = PRODUCTS.find((item) => item.id === Number(card.dataset.id));
+  if (!product) return;
+
+  const quantity = state.quantities[product.id] || 0;
+  const affordable = Math.floor(state.balance / product.price);
+  const requested = getRequestedAmount(card);
+  const canBuy = affordable > 0;
+
+  card.classList.toggle("owned", quantity > 0);
+  card.querySelector(".quantity strong").textContent = formatNumber(quantity);
+  card.querySelector('[data-action="sell"]').disabled = quantity === 0;
+  card.querySelector('[data-action="buy"]').disabled = !canBuy;
+  card.querySelector('[data-action="custom-buy"]').disabled = !canBuy || requested === 0 || requested > affordable;
+
+  const maxButton = card.querySelector('[data-action="max"]');
+  maxButton.disabled = !canBuy;
+  maxButton.querySelector("span").textContent = canBuy ? `×${formatNumber(affordable)}` : "Недоступно";
+}
+
+function updateVisibleProductCards() {
+  els.productsGrid.querySelectorAll(".product-card").forEach(updateProductCard);
+}
+
 function showToast(message, type = "buy") {
   const toast = document.createElement("div");
   toast.className = `toast ${type}`;
@@ -192,7 +226,12 @@ function animateBalance(type) {
 
 function purchase(product, amount = 1) {
   const affordable = Math.floor(state.balance / product.price);
-  const quantity = Math.max(0, Math.min(amount, affordable));
+  const requested = Math.floor(Number(amount));
+  if (!Number.isFinite(requested) || requested < 1) {
+    showToast("Укажи корректное количество", "warning");
+    return;
+  }
+  const quantity = Math.max(0, Math.min(requested, affordable));
   if (!quantity) {
     showToast("На это уже не хватает денег", "warning");
     return;
@@ -217,7 +256,8 @@ function sell(product) {
 function afterTransaction() {
   saveGame();
   checkMilestones();
-  render();
+  renderStats();
+  updateVisibleProductCards();
 }
 
 function checkMilestones() {
@@ -271,8 +311,17 @@ els.productsGrid.addEventListener("click", (event) => {
   if (!product) return;
 
   if (button.dataset.action === "buy") purchase(product);
+  if (button.dataset.action === "custom-buy") {
+    const requested = getRequestedAmount(card);
+    purchase(product, requested);
+  }
   if (button.dataset.action === "max") purchase(product, Math.floor(state.balance / product.price));
   if (button.dataset.action === "sell") sell(product);
+});
+
+els.productsGrid.addEventListener("input", (event) => {
+  if (!event.target.matches(".buy-amount")) return;
+  updateProductCard(event.target.closest("[data-id]"));
 });
 
 els.categoryChips.addEventListener("click", (event) => {
