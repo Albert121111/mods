@@ -37,30 +37,16 @@ const els = {
   confettiLayer: document.querySelector("#confetti-layer")
 };
 
-function formatCompactNumber(value) {
-  const units = [
-    { value: 1e18, label: "квинтлн" },
-    { value: 1e15, label: "квадрлн" },
-    { value: 1e12, label: "трлн" },
-    { value: 1e9, label: "млрд" },
-    { value: 1e6, label: "млн" },
-    { value: 1e3, label: "тыс" }
-  ];
-  const unit = units.find((item) => Math.abs(value) >= item.value);
-  if (!unit) return Math.round(value).toLocaleString("ru-RU");
-
-  const scaled = value / unit.value;
-  const maximumFractionDigits = scaled >= 100 ? 0 : scaled >= 10 ? 1 : 2;
-  return `${scaled.toLocaleString("ru-RU", { maximumFractionDigits })} ${unit.label}`;
+function formatNumber(value) {
+  return Math.round(value).toLocaleString("ru-RU");
 }
 
 function formatMoney(value) {
-  return `${formatCompactNumber(value)} ₽`;
+  return `${formatNumber(value)} ₽`;
 }
 
 function productPhoto(product) {
-  const keywords = encodeURIComponent(product.photo || "technology");
-  return `https://loremflickr.com/640/400/${keywords}/all?lock=${product.id}`;
+  return `assets/products/${product.id}.jpg`;
 }
 
 function loadGame() {
@@ -136,7 +122,7 @@ function renderProducts() {
         </div>
         <div class="product-visual">
           <img src="${productPhoto(product)}" alt="${product.name}" loading="lazy" referrerpolicy="no-referrer" />
-          <span class="photo-source">Фото: Flickr CC</span>
+          <span class="photo-source">Фото: Unsplash</span>
         </div>
         <div class="product-info">
           <h3>${product.name}</h3>
@@ -145,11 +131,11 @@ function renderProducts() {
         </div>
         <div class="quantity-row">
           <button class="action-button sell" data-action="sell" ${quantity === 0 ? "disabled" : ""} type="button">Продать</button>
-          <div class="quantity"><span>Куплено</span><strong>${formatCompactNumber(quantity)}</strong></div>
+          <div class="quantity"><span>Куплено</span><strong>${formatNumber(quantity)}</strong></div>
           <button class="action-button buy" data-action="buy" ${!canBuy ? "disabled" : ""} type="button">Купить</button>
         </div>
         <button class="max-button" data-action="max" ${!canBuy ? "disabled" : ""} type="button">
-          Купить максимум <span>${canBuy ? `×${formatCompactNumber(Math.floor(state.balance / product.price))}` : "Недоступно"}</span>
+          Купить максимум <span>${canBuy ? `×${formatNumber(Math.floor(state.balance / product.price))}` : "Недоступно"}</span>
         </button>
       </article>
     `;
@@ -162,7 +148,7 @@ function renderStats() {
 
   els.balance.textContent = formatMoney(state.balance);
   els.spentStat.textContent = formatMoney(spent);
-  els.itemsStat.textContent = formatCompactNumber(totalItems);
+  els.itemsStat.textContent = formatNumber(totalItems);
   els.percentStat.textContent = displayPercent;
   els.progressText.textContent = `Потрачено ${displayPercent}`;
   els.progressFill.style.width = `${Math.min(100, percent)}%`;
@@ -214,7 +200,7 @@ function purchase(product, amount = 1) {
   state.quantities[product.id] = (state.quantities[product.id] || 0) + quantity;
   state.balance -= product.price * quantity;
   animateBalance("buy");
-  showToast(quantity === 1 ? `Куплено: ${product.name}` : `Куплено ${formatCompactNumber(quantity)} × ${product.name}`);
+  showToast(quantity === 1 ? `Куплено: ${product.name}` : `Куплено ${formatNumber(quantity)} × ${product.name}`);
   afterTransaction();
 }
 
