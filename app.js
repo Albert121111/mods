@@ -1,5 +1,5 @@
-const INITIAL_BUDGET = 850_000_000_000;
-const STORAGE_KEY = "musk-spend-game-v1";
+const INITIAL_BUDGET = 62_448_565_000_000;
+const STORAGE_KEY = "musk-spend-game-rub-v1";
 const THEME_KEY = "musk-spend-theme";
 
 const state = {
@@ -37,14 +37,25 @@ const els = {
   confettiLayer: document.querySelector("#confetti-layer")
 };
 
-const moneyFormatter = new Intl.NumberFormat("en-US", {
-  style: "currency",
-  currency: "USD",
-  maximumFractionDigits: 0
-});
+function formatCompactNumber(value) {
+  const units = [
+    { value: 1e18, label: "квинтлн" },
+    { value: 1e15, label: "квадрлн" },
+    { value: 1e12, label: "трлн" },
+    { value: 1e9, label: "млрд" },
+    { value: 1e6, label: "млн" },
+    { value: 1e3, label: "тыс" }
+  ];
+  const unit = units.find((item) => Math.abs(value) >= item.value);
+  if (!unit) return Math.round(value).toLocaleString("ru-RU");
+
+  const scaled = value / unit.value;
+  const maximumFractionDigits = scaled >= 100 ? 0 : scaled >= 10 ? 1 : 2;
+  return `${scaled.toLocaleString("ru-RU", { maximumFractionDigits })} ${unit.label}`;
+}
 
 function formatMoney(value) {
-  return moneyFormatter.format(value);
+  return `${formatCompactNumber(value)} ₽`;
 }
 
 const categoryArtwork = {
@@ -203,11 +214,11 @@ function renderProducts() {
         </div>
         <div class="quantity-row">
           <button class="action-button sell" data-action="sell" ${quantity === 0 ? "disabled" : ""} type="button">Продать</button>
-          <div class="quantity"><span>Куплено</span><strong>${quantity.toLocaleString("ru-RU")}</strong></div>
+          <div class="quantity"><span>Куплено</span><strong>${formatCompactNumber(quantity)}</strong></div>
           <button class="action-button buy" data-action="buy" ${!canBuy ? "disabled" : ""} type="button">Купить</button>
         </div>
         <button class="max-button" data-action="max" ${!canBuy ? "disabled" : ""} type="button">
-          Купить максимум <span>${canBuy ? `×${Math.floor(state.balance / product.price).toLocaleString("ru-RU")}` : "Недоступно"}</span>
+          Купить максимум <span>${canBuy ? `×${formatCompactNumber(Math.floor(state.balance / product.price))}` : "Недоступно"}</span>
         </button>
       </article>
     `;
@@ -220,7 +231,7 @@ function renderStats() {
 
   els.balance.textContent = formatMoney(state.balance);
   els.spentStat.textContent = formatMoney(spent);
-  els.itemsStat.textContent = totalItems.toLocaleString("ru-RU");
+  els.itemsStat.textContent = formatCompactNumber(totalItems);
   els.percentStat.textContent = displayPercent;
   els.progressText.textContent = `Потрачено ${displayPercent}`;
   els.progressFill.style.width = `${Math.min(100, percent)}%`;
@@ -272,7 +283,7 @@ function purchase(product, amount = 1) {
   state.quantities[product.id] = (state.quantities[product.id] || 0) + quantity;
   state.balance -= product.price * quantity;
   animateBalance("buy");
-  showToast(quantity === 1 ? `Куплено: ${product.name}` : `Куплено ${quantity.toLocaleString("ru-RU")} × ${product.name}`);
+  showToast(quantity === 1 ? `Куплено: ${product.name}` : `Куплено ${formatCompactNumber(quantity)} × ${product.name}`);
   afterTransaction();
 }
 
