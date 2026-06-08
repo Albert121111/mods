@@ -13,7 +13,7 @@ const PROFILES = {
   },
   paradeev1ch: {
     budget: 30_000_000,
-    avatar: "assets/avatar/paradeev1ch-cutout.png",
+    avatar: "assets/avatar/paradeev1ch-photo.png?v=15",
     name: "paradeev1ch",
     shortName: "paradeev1ch",
     initials: "P1",
@@ -23,7 +23,7 @@ const PROFILES = {
   },
   kyertov: {
     budget: 158_000_000,
-    avatar: "assets/avatar/kyertov-cutout.png",
+    avatar: "assets/avatar/kyertov-photo.png?v=15",
     name: "Влада Куертова",
     shortName: "Kyertov",
     initials: "VK",
