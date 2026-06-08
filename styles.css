@@ -219,10 +219,10 @@ button:disabled {
   transform: translateX(-50%);
 }
 
-.portrait-photo.avatar-graphic {
-  bottom: 22px;
-  width: 225px;
-  height: 225px;
+.portrait-photo.profile-cutout {
+  bottom: -4px;
+  width: 270px;
+  height: 315px;
 }
 
 .portrait-initials {
@@ -1026,10 +1026,10 @@ footer p {
     height: 257px;
   }
 
-  .portrait-photo.avatar-graphic {
-    bottom: 18px;
-    width: 175px;
-    height: 175px;
+  .portrait-photo.profile-cutout {
+    bottom: -3px;
+    width: 210px;
+    height: 245px;
   }
 
   .products-grid {
@@ -1078,10 +1078,10 @@ footer p {
     height: 210px;
   }
 
-  .portrait-photo.avatar-graphic {
-    bottom: 14px;
-    width: 145px;
-    height: 145px;
+  .portrait-photo.profile-cutout {
+    bottom: -2px;
+    width: 172px;
+    height: 200px;
   }
 
   .portrait-x {

@@ -13,7 +13,7 @@ const PROFILES = {
   },
   paradeev1ch: {
     budget: 30_000_000,
-    avatar: "assets/avatar/paradeev1ch-avatar.svg",
+    avatar: "assets/avatar/paradeev1ch-cutout.png",
     name: "paradeev1ch",
     shortName: "paradeev1ch",
     initials: "P1",
@@ -23,7 +23,7 @@ const PROFILES = {
   },
   kyertov: {
     budget: 158_000_000,
-    avatar: "assets/avatar/kyertov-avatar.svg",
+    avatar: "assets/avatar/kyertov-cutout.png",
     name: "Влада Куертова",
     shortName: "Kyertov",
     initials: "VK",
@@ -160,7 +160,7 @@ function renderProfile() {
   els.profilePortrait.setAttribute("aria-label", `Аватар ${profile.shortName}`);
   els.portraitPhoto.src = profile.avatar;
   els.portraitPhoto.alt = profile.shortName;
-  els.portraitPhoto.classList.toggle("avatar-graphic", state.profileId !== "elon");
+  els.portraitPhoto.classList.toggle("profile-cutout", state.profileId !== "elon");
   els.portraitPhoto.classList.remove("hidden");
   els.portraitInitials.classList.add("hidden");
   els.portraitInitials.textContent = profile.initials;
