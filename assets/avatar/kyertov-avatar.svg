@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 360" role="img" aria-label="Аватар Kyertov">
+  <defs>
+    <linearGradient id="bg" x1="38" y1="24" x2="310" y2="330" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#38bdf8"/>
+      <stop offset="0.52" stop-color="#0f766e"/>
+      <stop offset="1" stop-color="#111827"/>
+    </linearGradient>
+    <linearGradient id="card" x1="95" y1="72" x2="262" y2="268" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#ccfbf1"/>
+    </linearGradient>
+    <filter id="shadow" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#000" flood-opacity="0.32"/>
+    </filter>
+  </defs>
+  <circle cx="180" cy="180" r="170" fill="url(#bg)"/>
+  <circle cx="289" cy="73" r="82" fill="#ffffff" opacity="0.11"/>
+  <circle cx="77" cy="287" r="100" fill="#22c55e" opacity="0.12"/>
+  <g filter="url(#shadow)">
+    <rect x="82" y="80" width="196" height="205" rx="34" fill="url(#card)"/>
+    <rect x="108" y="111" width="144" height="22" rx="11" fill="#0f172a" opacity="0.18"/>
+    <path d="M112 232h138" stroke="#0f172a" stroke-opacity="0.14" stroke-width="12" stroke-linecap="round"/>
+    <path d="M122 210l37-45 34 31 55-72" fill="none" stroke="#16a34a" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="122" cy="210" r="13" fill="#0f766e"/>
+    <circle cx="159" cy="165" r="13" fill="#0f766e"/>
+    <circle cx="193" cy="196" r="13" fill="#0f766e"/>
+    <circle cx="248" cy="124" r="13" fill="#0f766e"/>
+    <path d="M105 94l-24-24m174 24 24-24" stroke="#fff" stroke-width="12" stroke-linecap="round" opacity="0.75"/>
+  </g>
+  <text x="180" y="327" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="45" font-weight="900" letter-spacing="-4">VK</text>
+</svg>

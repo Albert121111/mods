@@ -3,6 +3,7 @@ const THEME_KEY = "musk-spend-theme";
 const PROFILES = {
   elon: {
     budget: 62_448_565_000_000,
+    avatar: "assets/avatar/elon-cutout.png",
     name: "Илона Маска",
     shortName: "Илон Маск",
     initials: "EM",
@@ -12,6 +13,7 @@ const PROFILES = {
   },
   paradeev1ch: {
     budget: 30_000_000,
+    avatar: "assets/avatar/paradeev1ch-avatar.svg",
     name: "paradeev1ch",
     shortName: "paradeev1ch",
     initials: "P1",
@@ -21,6 +23,7 @@ const PROFILES = {
   },
   kyertov: {
     budget: 158_000_000,
+    avatar: "assets/avatar/kyertov-avatar.svg",
     name: "Влада Куертова",
     shortName: "Kyertov",
     initials: "VK",
@@ -155,8 +158,11 @@ function renderProfile() {
   els.profilePortrait.classList.toggle("paradeev1ch", state.profileId === "paradeev1ch");
   els.profilePortrait.classList.toggle("kyertov", state.profileId === "kyertov");
   els.profilePortrait.setAttribute("aria-label", `Аватар ${profile.shortName}`);
-  els.portraitPhoto.classList.toggle("hidden", state.profileId !== "elon");
-  els.portraitInitials.classList.toggle("hidden", state.profileId === "elon");
+  els.portraitPhoto.src = profile.avatar;
+  els.portraitPhoto.alt = profile.shortName;
+  els.portraitPhoto.classList.toggle("avatar-graphic", state.profileId !== "elon");
+  els.portraitPhoto.classList.remove("hidden");
+  els.portraitInitials.classList.add("hidden");
   els.portraitInitials.textContent = profile.initials;
   document.querySelectorAll(".profile-tab").forEach((button) => {
     button.classList.toggle("active", button.dataset.profile === state.profileId);

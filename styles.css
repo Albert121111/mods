@@ -219,6 +219,12 @@ button:disabled {
   transform: translateX(-50%);
 }
 
+.portrait-photo.avatar-graphic {
+  bottom: 22px;
+  width: 225px;
+  height: 225px;
+}
+
 .portrait-initials {
   position: absolute;
   z-index: 2;
@@ -238,6 +244,13 @@ button:disabled {
 
 .portrait.kyertov {
   background: radial-gradient(circle at 50% 35%, #38bdf8, #12334a 70%);
+}
+
+.portrait.paradeev1ch .portrait-x,
+.portrait.paradeev1ch .portrait-star,
+.portrait.kyertov .portrait-x,
+.portrait.kyertov .portrait-star {
+  display: none;
 }
 
 .portrait-x {
@@ -1013,6 +1026,12 @@ footer p {
     height: 257px;
   }
 
+  .portrait-photo.avatar-graphic {
+    bottom: 18px;
+    width: 175px;
+    height: 175px;
+  }
+
   .products-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -1057,6 +1076,12 @@ footer p {
   .portrait-photo {
     width: 180px;
     height: 210px;
+  }
+
+  .portrait-photo.avatar-graphic {
+    bottom: 14px;
+    width: 145px;
+    height: 145px;
   }
 
   .portrait-x {
