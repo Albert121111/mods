@@ -138,3 +138,72 @@ const PRODUCT_PHOTOS = [
 PRODUCTS.forEach((product, index) => {
   product.photo = PRODUCT_PHOTOS[index];
 });
+
+// Ориентировочные розничные цены России и СНГ на июнь 2026 года.
+const CIS_PRICE_OVERRIDES = {
+  1: 450, 2: 900, 3: 250, 4: 350, 5: 2990, 6: 3990, 7: 1500, 8: 12000, 9: 18000, 10: 350000,
+  11: 6500, 12: 12000, 13: 18000, 14: 135000, 15: 85000, 16: 80000, 17: 280000, 18: 230000, 19: 750000, 20: 1500000,
+  21: 600000, 22: 70000, 23: 150000, 24: 650000, 25: 350000, 26: 3500000, 27: 9000000, 28: 12000000,
+  33: 65000, 34: 90000, 35: 1200000, 36: 6500000, 37: 13000000, 38: 17000000, 39: 45000000, 40: 50000000,
+  41: 65000000, 42: 450000000, 43: 18000000, 44: 350000000, 45: 4500000000, 46: 6500000000, 47: 45000000000,
+  49: 9000000000, 50: 60000000000, 51: 900000000000,
+  52: 10000000, 53: 25000000, 54: 450000000, 55: 250000000, 56: 800000000, 57: 2500000000, 58: 12000000000,
+  59: 45000000000, 60: 90000000000, 61: 80000000000, 62: 12000000000, 63: 150000000000, 64: 1200000000000,
+  66: 8000000, 67: 35000000, 68: 1500000000, 69: 350000000, 70: 3500000000, 71: 2500000000, 72: 18000000000,
+  73: 1200000000, 74: 15000000000, 75: 500000000, 76: 45000000000, 77: 150000000000, 78: 90000000000,
+  79: 300000000000, 80: 500000000000, 81: 250000000000, 94: 25000000
+};
+
+PRODUCTS.forEach((product) => {
+  if (CIS_PRICE_OVERRIDES[product.id]) product.price = CIS_PRICE_OVERRIDES[product.id];
+  product.priceNote = product.id <= 81 || product.id === 94
+    ? "Ориентир рынка РФ/СНГ, июнь 2026"
+    : "Условная оценка проекта";
+});
+
+PRODUCTS.push(
+  { id: 108, name: "Батон хлеба", price: 70, category: "Еда и мелочи", emoji: "", description: "Теплый нарезной из магазина у дома.", popularity: 97, crazy: 1 },
+  { id: 109, name: "Пачка пельменей", price: 450, category: "Еда и мелочи", emoji: "", description: "Стратегический запас на вечер.", popularity: 96, crazy: 1 },
+  { id: 110, name: "Килограмм шашлыка", price: 1200, category: "Еда и мелочи", emoji: "", description: "Главная валюта летних выходных.", popularity: 98, crazy: 1 },
+  { id: 111, name: "Корзина продуктов на неделю", price: 8500, category: "Еда и мелочи", emoji: "", description: "Базовый набор для семьи.", popularity: 100, crazy: 1 },
+  { id: 112, name: "Месяц мобильной связи", price: 850, category: "Еда и мелочи", emoji: "", description: "Звонки, интернет и немного спама.", popularity: 95, crazy: 1 },
+  { id: 113, name: "Год Яндекс Плюса", price: 3990, category: "Еда и мелочи", emoji: "", description: "Музыка, фильмы и кешбэк баллами.", popularity: 94, crazy: 1 },
+  { id: 114, name: "Набор для шашлыка", price: 25000, category: "Еда и мелочи", emoji: "", description: "Мангал, шампуры и складные кресла.", popularity: 82, crazy: 2 },
+  { id: 115, name: "Шуба", price: 300000, category: "Еда и мелочи", emoji: "", description: "Классическая зимняя роскошь.", popularity: 63, crazy: 3 },
+  { id: 116, name: "Флагманский Android", price: 130000, category: "Техника", emoji: "", description: "Топовый смартфон без яблока.", popularity: 92, crazy: 2 },
+  { id: 117, name: "Ноутбук для учебы", price: 75000, category: "Техника", emoji: "", description: "Для курсовых и вечерних игр.", popularity: 97, crazy: 1 },
+  { id: 118, name: "Сборка ПК с RTX 5090", price: 650000, category: "Техника", emoji: "", description: "Максимальные настройки и счета за свет.", popularity: 99, crazy: 4 },
+  { id: 119, name: "Умная колонка", price: 18000, category: "Техника", emoji: "", description: "Включает музыку и ставит таймер пельменей.", popularity: 94, crazy: 1 },
+  { id: 120, name: "Робот-пылесос", price: 55000, category: "Техника", emoji: "", description: "Карта квартиры и чистый пол.", popularity: 96, crazy: 2 },
+  { id: 121, name: "Майнинг-ферма", price: 5000000, category: "Техника", emoji: "", description: "Греет помещение и считает хеши.", popularity: 73, crazy: 6 },
+  { id: 122, name: "Lada Granta", price: 985000, category: "Транспорт", emoji: "", description: "Народный новый автомобиль.", popularity: 100, crazy: 1 },
+  { id: 123, name: "Lada Niva Travel", price: 1600000, category: "Транспорт", emoji: "", description: "Доедет туда, где дороги закончились.", popularity: 96, crazy: 2 },
+  { id: 124, name: "Haval Jolion", price: 2800000, category: "Транспорт", emoji: "", description: "Популярный городской кроссовер.", popularity: 98, crazy: 2 },
+  { id: 125, name: "Geely Monjaro", price: 5000000, category: "Транспорт", emoji: "", description: "Большой кроссовер для дальних поездок.", popularity: 95, crazy: 3 },
+  { id: 126, name: "УАЗ Буханка", price: 1800000, category: "Транспорт", emoji: "", description: "Легендарная геометрическая проходимость.", popularity: 88, crazy: 4 },
+  { id: 127, name: "КамАЗ", price: 12000000, category: "Транспорт", emoji: "", description: "Рабочая лошадь тяжелого класса.", popularity: 80, crazy: 3 },
+  { id: 128, name: "БелАЗ", price: 250000000, category: "Транспорт", emoji: "", description: "Обычная машина рядом выглядит игрушкой.", popularity: 91, crazy: 8 },
+  { id: 129, name: "Плацкартный вагон", price: 120000000, category: "Транспорт", emoji: "", description: "Пятьдесят четыре места и чай в подстаканнике.", popularity: 77, crazy: 5 },
+  { id: 130, name: "Гараж", price: 1500000, category: "Недвижимость", emoji: "", description: "Для машины, инструментов и важных разговоров.", popularity: 92, crazy: 1 },
+  { id: 131, name: "Дача", price: 4500000, category: "Недвижимость", emoji: "", description: "Шесть соток, теплица и летний отдых.", popularity: 98, crazy: 2 },
+  { id: 132, name: "Квартира в Екатеринбурге", price: 9000000, category: "Недвижимость", emoji: "", description: "Двушка в хорошем районе.", popularity: 95, crazy: 2 },
+  { id: 133, name: "Квартира в Москве", price: 25000000, category: "Недвижимость", emoji: "", description: "Не очень большая, зато внутри МКАД.", popularity: 99, crazy: 4 },
+  { id: 134, name: "Коттедж в Подмосковье", price: 60000000, category: "Недвижимость", emoji: "", description: "Дом, участок и долгая дорога до центра.", popularity: 89, crazy: 4 },
+  { id: 135, name: "База отдыха", price: 250000000, category: "Недвижимость", emoji: "", description: "Домики, баня и берег озера.", popularity: 84, crazy: 5 },
+  { id: 136, name: "Пункт выдачи заказов", price: 1500000, category: "Бизнес", emoji: "", description: "Коробки, примерочные и поток клиентов.", popularity: 97, crazy: 2 },
+  { id: 137, name: "Кофейня у дома", price: 5000000, category: "Бизнес", emoji: "", description: "Спешелти-зерно и постоянные гости.", popularity: 96, crazy: 2 },
+  { id: 138, name: "Шаурмичная", price: 2500000, category: "Бизнес", emoji: "", description: "Небольшой бизнес с большим соусом.", popularity: 100, crazy: 2 },
+  { id: 139, name: "Компьютерный клуб", price: 25000000, category: "Бизнес", emoji: "", description: "Игровые места, турниры и ночные тарифы.", popularity: 98, crazy: 4 },
+  { id: 140, name: "Автомойка самообслуживания", price: 35000000, category: "Бизнес", emoji: "", description: "Пена, жетоны и очередь по выходным.", popularity: 87, crazy: 3 },
+  { id: 141, name: "Фермерское хозяйство", price: 80000000, category: "Бизнес", emoji: "", description: "Поля, техника и свежие продукты.", popularity: 82, crazy: 4 },
+  { id: 142, name: "Региональная сеть магазинов", price: 1500000000, category: "Бизнес", emoji: "", description: "Продукты рядом с каждым домом.", popularity: 86, crazy: 6 },
+  { id: 143, name: "Личный вагон метро", price: 180000000, category: "Безумные покупки", emoji: "", description: "Всегда есть свободное место.", popularity: 93, crazy: 8 },
+  { id: 144, name: "Запас гречки на всю жизнь", price: 3000000, category: "Безумные покупки", emoji: "", description: "Финансовая и продовольственная стабильность.", popularity: 99, crazy: 7 },
+  { id: 145, name: "Ремонт всей дороги во дворе", price: 50000000, category: "Безумные покупки", emoji: "", description: "Ни одной ямы хотя бы до следующей весны.", popularity: 100, crazy: 8 },
+  { id: 146, name: "Личный ледокол", price: 50000000000, category: "Безумные покупки", emoji: "", description: "Северный морской путь по личному расписанию.", popularity: 84, crazy: 10 },
+  { id: 147, name: "Купить все квартиры в подъезде", price: 450000000, category: "Безумные покупки", emoji: "", description: "Соседи больше не сверлят по утрам.", popularity: 98, crazy: 9 }
+);
+
+PRODUCTS.slice(107).forEach((product) => {
+  product.priceNote = "Ориентир рынка РФ/СНГ, июнь 2026";
+});

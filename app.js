@@ -200,6 +200,7 @@ function renderProducts() {
           <h3>${product.name}</h3>
           <p>${product.description}</p>
           <strong class="product-price">${formatMoney(product.price)}</strong>
+          <small class="price-note">${product.priceNote || "Ориентир рынка РФ/СНГ"}</small>
         </div>
         <div class="quantity-row">
           <button class="action-button sell" data-action="sell" ${quantity === 0 ? "disabled" : ""} type="button">Продать</button>
