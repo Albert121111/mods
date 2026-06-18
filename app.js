@@ -1,8 +1,12 @@
 const THEME_KEY = "musk-spend-theme";
+const CURRENCY_KEY = "musk-spend-currency";
+const USD_TO_RUB = 72.7479;
+const ELON_NET_WORTH_USD = 1_200_000_000_000;
+const ELON_NET_WORTH_RUB = Math.round(ELON_NET_WORTH_USD * USD_TO_RUB);
 
 const PROFILES = {
   elon: {
-    budget: 62_448_565_000_000,
+    budget: ELON_NET_WORTH_RUB,
     avatar: "assets/avatar/elon-cutout.png",
     name: "Илона Маска",
     shortName: "Илон Маск",
@@ -45,6 +49,7 @@ const state = {
   category: "Все",
   sort: "cheap",
   search: "",
+  currency: localStorage.getItem(CURRENCY_KEY) === "USD" ? "USD" : "RUB",
   milestones: new Set()
 };
 
@@ -64,6 +69,7 @@ const els = {
   visibleCount: document.querySelector("#visible-count"),
   searchInput: document.querySelector("#search-input"),
   sortSelect: document.querySelector("#sort-select"),
+  currencyToggle: document.querySelector("#currency-toggle"),
   themeToggle: document.querySelector("#theme-toggle"),
   resetButton: document.querySelector("#reset-button"),
   finalResetButton: document.querySelector("#final-reset-button"),
@@ -94,8 +100,18 @@ function formatNumber(value) {
   return Math.round(value).toLocaleString("ru-RU");
 }
 
-function formatMoney(value) {
-  return `${formatNumber(value)} ₽`;
+function formatUsd(valueRub) {
+  const dollars = valueRub / USD_TO_RUB;
+  const maximumFractionDigits = dollars < 1_000 ? 2 : dollars < 100_000 ? 1 : 0;
+  return `$${dollars.toLocaleString("en-US", {
+    minimumFractionDigits: dollars < 1_000 ? 2 : 0,
+    maximumFractionDigits
+  })}`;
+}
+
+function formatMoney(valueRub) {
+  if (state.currency === "USD") return formatUsd(valueRub);
+  return `${formatNumber(valueRub)} ₽`;
 }
 
 function productPhoto(product) {
@@ -167,6 +183,11 @@ function renderProfile() {
   document.querySelectorAll(".profile-tab").forEach((button) => {
     button.classList.toggle("active", button.dataset.profile === state.profileId);
   });
+}
+
+function renderCurrencyToggle() {
+  els.currencyToggle.textContent = state.currency === "RUB" ? "Показать $" : "Показать ₽";
+  els.currencyToggle.setAttribute("aria-label", state.currency === "RUB" ? "Показать суммы в долларах" : "Показать суммы в рублях");
 }
 
 function getVisibleProducts() {
@@ -255,6 +276,7 @@ function renderStats() {
 
 function render() {
   renderProfile();
+  renderCurrencyToggle();
   renderCategories();
   renderProducts();
   renderStats();
@@ -392,6 +414,14 @@ function setTheme(theme) {
   localStorage.setItem(THEME_KEY, theme);
 }
 
+function toggleCurrency() {
+  state.currency = state.currency === "RUB" ? "USD" : "RUB";
+  localStorage.setItem(CURRENCY_KEY, state.currency);
+  renderCurrencyToggle();
+  renderProducts();
+  renderStats();
+}
+
 els.productsGrid.addEventListener("click", (event) => {
   const button = event.target.closest("[data-action]");
   const card = event.target.closest("[data-id]");
@@ -445,6 +475,7 @@ els.themeToggle.addEventListener("click", () => {
   setTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark");
 });
 
+els.currencyToggle.addEventListener("click", toggleCurrency);
 els.resetButton.addEventListener("click", () => resetGame(false));
 els.finalResetButton.addEventListener("click", () => resetGame(false));
 els.clearSaveButton.addEventListener("click", () => resetGame(true));
