@@ -1,7 +1,7 @@
 const THEME_KEY = "musk-spend-theme";
 const CURRENCY_KEY = "musk-spend-currency";
 const USD_TO_RUB = 72.7479;
-const ELON_NET_WORTH_USD = 1_200_000_000_000;
+const ELON_NET_WORTH_USD = 1_400_000_000_000;
 const ELON_NET_WORTH_RUB = Math.round(ELON_NET_WORTH_USD * USD_TO_RUB);
 
 const PROFILES = {
